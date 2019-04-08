@@ -34,6 +34,3 @@ class Queue:
             return None
         self.size -= 1
         return self.storage.pop()
-
-    def len(self):
-        return self.size
