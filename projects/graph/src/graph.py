@@ -26,16 +26,25 @@ class Graph:
         else:
             raise IndexError("That vertex doesnt exist")
 
-    def bfs(self, starting_vertex_id, search_query):
+    def bfs(self, starting_vertex_id, target_vortex):
         # Create an empty queue
         q = Queue()
         # Create a visited set
+        path = []
+        path.append(starting_vertex_id)
         visited = set()
         # Enqueue [A PATH TO] the starting vertex to the queue
-        q.enqueue(starting_vertex_id)
+        q.enqueue(path)
         # While the queue is not empty...
         while q.size > 0:
-            pass
+            v = q.dequeue()
+            if v[-1] not in visted:
+                visited.add(v[-1])
+                if v[-1] == target_vortex:
+                    return path
+                for next_vert in self.vertices[v[-1]]:
+                    path.append(next_vert)
+                q.enqueue()    
             # Dequeue the first [PATH] from the queue
             # PULL THE LAST VERTEX FROM THE PATH
             # Check if it's visited
@@ -116,5 +125,5 @@ test_graph.add_edge(2, 4)
 test_graph.add_edge(2, 5)
 test_graph.add_edge(3, 6)
 test_graph.add_edge(3, 7)
-test_graph.dft(1)
+test_graph.bft(1)
 print(f"Test Graph: {test_graph.vertices}")
