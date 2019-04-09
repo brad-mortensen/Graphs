@@ -18,7 +18,8 @@ class SocialGraph:
         """
         if userID == friendID:
             print("WARNING: You cannot be friends with yourself")
-        elif friendID in self.friendships[userID] or userID in self.friendships[friendID]:
+        elif friendID in self.friendships[userID] or\
+                userID in self.friendships[friendID]:
             print("WARNING: Friendship already exists")
         else:
             self.friendships[userID].add(friendID)
@@ -86,6 +87,10 @@ class SocialGraph:
                     path_copy = list(path)
                     path_copy.append(friend)
                     q.enqueue(path_copy)
+        # lengths = []
+        # for key, value in visited.items():
+        #     lengths.append(len(visited[key]))
+        # return sum(lengths)/len(lengths)
         return visited
 
 
@@ -109,7 +114,7 @@ class Queue:
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populateGraph(1000, 5)
+    sg.populateGraph(10, 5)
     print(f"FriendShips: \n\n {sg.friendships}")
     connections = sg.getAllSocialPaths(1)
     print("\n")
