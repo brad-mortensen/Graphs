@@ -30,37 +30,59 @@ class Graph:
         # Create an empty queue
         q = Queue()
         # Create a visited set
-        path = []
-        path.append(starting_vertex_id)
+        q.enqueue([starting_vertex_id])
         visited = set()
         # Enqueue [A PATH TO] the starting vertex to the queue
-        q.enqueue(path)
         # While the queue is not empty...
         while q.size > 0:
-            v = q.dequeue()
-            if v[-1] not in visted:
-                visited.add(v[-1])
-                if v[-1] == target_vortex:
+            path = q.dequeue()
+            v = path[-1]
+            if v not in visited:
+                if v == target_vortex:
                     return path
-                for next_vert in self.vertices[v[-1]]:
-                    path.append(next_vert)
-                q.enqueue()    
-            # Dequeue the first [PATH] from the queue
-            # PULL THE LAST VERTEX FROM THE PATH
-            # Check if it's visited
-            # If it hasn't been visited...
-                # Mark it as visited
-                # CHECK IF IT'S EQUAL TO THE TARGET VERTEX
-                # IF IT IS, RETURN THE PATH
-                # Put [A PATH TO] all of its neighbors in the back of the queue
-                    # COPY THE PATH
-                    # APPEND THE NEIGHBOR VERTEX TO THE PATH
-                    # ENQUEUE THE NEW PATH
+                visited.add(v)
+                for next_vert in self.vertices[v]:
+                    path_copy = list(path)
+                    path_copy.append(next_vert)
+                    q.enqueue(path_copy)
+        return None
+        # Dequeue the first [PATH] from the queue
+        # PULL THE LAST VERTEX FROM THE PATH
+        # Check if it's visited
+        # If it hasn't been visited...
+        # Mark it as visited
+        # CHECK IF IT'S EQUAL TO THE TARGET VERTEX
+        # IF IT IS, RETURN THE PATH
+        # Put [A PATH TO] all of its neighbors in the back of the queue
+        # COPY THE PATH
+        # APPEND THE NEIGHBOR VERTEX TO THE PATH
+        # ENQUEUE THE NEW PATH
 
-    def dfs(self, starting_vertex_id, search_query):
+    def dfs(self, starting_vertex_id, target_vortex):
+        # Create an empty stack
+        s = Stack()
+        # Create a visited set
+        s.push([starting_vertex_id])
+        visited = set()
+        # Enstack [A PATH TO] the starting vertex to the stack
+        # While the stack is not empty...
+        while s.size() > 0:
+            path = s.pop()
+            v = path[-1]
+            if v not in visited:
+                visited.add(v)
+                if v == target_vortex:
+                    return path
+                for next_vert in self.vertices[v]:
+                    path_copy = path
+                    path_copy.append(next_vert)
+                    s.push(path_copy)
+        return []
+# Implement the queue, and enque the starting Vertex ID
+
+    def dfs_r(self, starting_vertex_id, visited=None):
         pass
 
-# Implement the queue, and enque the starting Vertex ID
     def bft(self, starting_vertex_id):
         # Create and empty queue
         q = Queue()
@@ -79,6 +101,15 @@ class Graph:
         # Add all of its neighbors to the back of the queue
                 for next_vert in self.vertices[v]:
                     q.enqueue(next_vert)
+
+    def dft_r(self, starting_vertex_id, visited=None):
+        if visited is None:
+            visited = set()
+        visited.add(starting_vertex_id)
+        print(starting_vertex_id)
+        for child_vert in self.vertices[starting_vertex_id]:
+            if child_vert not in visited:
+                self.dft_r(child_vert, visited)
 
     def dft(self, starting_vertex_id):
         # Create an empty stack
@@ -100,17 +131,17 @@ class Graph:
                     s.push(next_vert)
 
 
-seasons = Graph()
-seasons.add_vertex("Spring")
-seasons.add_vertex("Summer")
-seasons.add_vertex("Fall")
-seasons.add_vertex("Winter")
-seasons.add_directed_edge("Spring", "Summer")
-seasons.add_directed_edge("Summer", "Fall")
-seasons.add_directed_edge("Fall", "Winter")
-seasons.add_directed_edge("Winter", "Spring")
-# seasons.dft("Summer")
-print(f"Seasons Graph: {seasons.vertices}")
+# seasons = Graph()
+# seasons.add_vertex("Spring")
+# seasons.add_vertex("Summer")
+# seasons.add_vertex("Fall")
+# seasons.add_vertex("Winter")
+# seasons.add_directed_edge("Spring", "Summer")
+# seasons.add_directed_edge("Summer", "Fall")
+# seasons.add_directed_edge("Fall", "Winter")
+# seasons.add_directed_edge("Winter", "Spring")
+# # seasons.dft("Summer")
+# print(f"Seasons Graph: {seasons.vertices}")
 test_graph = Graph()
 test_graph.add_vertex(1)
 test_graph.add_vertex(2)
@@ -125,5 +156,5 @@ test_graph.add_edge(2, 4)
 test_graph.add_edge(2, 5)
 test_graph.add_edge(3, 6)
 test_graph.add_edge(3, 7)
-test_graph.bft(1)
+test_graph.dft_r(1)
 print(f"Test Graph: {test_graph.vertices}")
