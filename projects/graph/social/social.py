@@ -1,3 +1,4 @@
+import random
 
 
 class User:
@@ -58,7 +59,7 @@ class SocialGraph:
                 # Adds friends to list
                 possibleFriendships.append((userID, friendID))
         random.shuffle(possibleFriendships)  # Shuffles possible friendships
-        for i in range(numUsers * avgFriendships // 2):  
+        for i in range(numUsers * avgFriendships // 2):
             # Loops through friendships and creates friendships
             friendship = possibleFriendships[i]
             self.addFriendship(friendship[0], friendship[1])
@@ -74,12 +75,42 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        q = Queue()
+        q.enqueue([userID])
+        while q.size > 0:
+            path = q.dequeue()
+            v = path[-1]
+            if v not in visited:
+                visited[v] = path
+                for friend in self.friendships[v]:
+                    path_copy = list(path)
+                    path_copy.append(friend)
+                    q.enqueue(path_copy)
         return visited
+
+
+class Queue:
+    def __init__(self):
+        self.size = 0
+    # what data structure should we
+    # use to store queue elements?
+        self.storage = []
+
+    def enqueue(self, item):
+        self.storage.insert(0, item)
+        self.size += 1
+
+    def dequeue(self):
+        if self.size == 0:
+            return None
+        self.size -= 1
+        return self.storage.pop()
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populateGraph(10, 2)
-    print(sg.friendships)
+    sg.populateGraph(1000, 5)
+    print(f"FriendShips: \n\n {sg.friendships}")
     connections = sg.getAllSocialPaths(1)
-    print(connections)
+    print("\n")
+    print(f"Connections: \n\n {connections}")
