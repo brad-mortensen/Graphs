@@ -4,6 +4,7 @@ class User:
     def __init__(self, name):
         self.name = name
 
+
 class SocialGraph:
     def __init__(self):
         self.lastID = 0
@@ -26,7 +27,7 @@ class SocialGraph:
         """
         Create a new user with a sequential integer ID
         """
-        self.lastID += 1  # automatically increment the ID to assign the new user
+        self.lastID += 1  # automatically increment the ID to the new user
         self.users[self.lastID] = User(name)
         self.friendships[self.lastID] = set()
 
@@ -38,7 +39,7 @@ class SocialGraph:
         Creates that number of users and a randomly distributed friendships
         between those users.
 
-        The number of users must be greater than the average number of friendships.
+        The number of users must be greater than number of friendships.
         """
         # Reset graph
         self.lastID = 0

@@ -5,7 +5,7 @@ Simple graph implementation
 
 
 class Graph:
-    """Represent a graph as a dictionary of vertices mapping labels to edges."""
+    """Represent a graph as a dictionary of vertices."""
 
     def __init__(self):
         self.vertices = {}
@@ -80,8 +80,21 @@ class Graph:
         return []
 # Implement the queue, and enque the starting Vertex ID
 
-    def dfs_r(self, starting_vertex_id, visited=None):
-        pass
+    def dfs_r(self, starting_vertex_id, target, visited=None, path=None):
+        if visited is None:
+            visited = set()
+        if path is None:
+            path = list()
+        visited.add(starting_vertex_id)
+        path = path + [starting_vertex_id]
+        if starting_vertex_id == target:
+            return path
+        for child_vert in self.vertices[starting_vertex_id]:
+            if child_vert not in visited:
+                new_path = self.dfs_r(child_vert, target_value, visited, path)
+                if new_path:
+                    return new_path
+        return None
 
     def bft(self, starting_vertex_id):
         # Create and empty queue
