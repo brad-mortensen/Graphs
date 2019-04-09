@@ -47,15 +47,19 @@ class SocialGraph:
         self.friendships = {}
         # !!!! IMPLEMENT ME
         # Add users
+        # Loop to generate users
         for i in range(0, numUsers):
             self.addUser(f"User{i}")
         # Create friendships
-        possibleFriendships = []
-        for userID in self.users:
+        possibleFriendships = []  # Friendship list
+        for userID in self.users:  # Loop through users
             for friendID in range(userID + 1, self.lastID + 1):
+                # Loops through all possible friends
+                # Adds friends to list
                 possibleFriendships.append((userID, friendID))
-        random.shuffle(possibleFriendships)
-        for i in range(numUsers * avgFriendships // 2):
+        random.shuffle(possibleFriendships)  # Shuffles possible friendships
+        for i in range(numUsers * avgFriendships // 2):  
+            # Loops through friendships and creates friendships
             friendship = possibleFriendships[i]
             self.addFriendship(friendship[0], friendship[1])
 
