@@ -89,7 +89,7 @@ class SocialGraph:
                         path_copy.append(friend)
                         q.enqueue(path_copy)
         # lengths = []
-        # for key, value in visited.items():
+        # for key in visited.items():
         #     lengths.append(len(visited[key]))
         # return sum(lengths)/len(lengths)
         return visited
