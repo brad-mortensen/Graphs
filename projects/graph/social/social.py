@@ -84,9 +84,10 @@ class SocialGraph:
             if v not in visited:
                 visited[v] = path
                 for friend in self.friendships[v]:
-                    path_copy = list(path)
-                    path_copy.append(friend)
-                    q.enqueue(path_copy)
+                    if friend not in visited:
+                        path_copy = list(path)
+                        path_copy.append(friend)
+                        q.enqueue(path_copy)
         # lengths = []
         # for key, value in visited.items():
         #     lengths.append(len(visited[key]))
